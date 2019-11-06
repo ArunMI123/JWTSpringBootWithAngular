@@ -1,0 +1,28 @@
+<div class="login">
+  
+    <div class="container login-content">
+      <div class="card card-login mx-auto">
+  
+        <div class="card-body">
+          <form #f="ngForm" action="" autocomplete="off">
+            <div class="form-group col-md-10 mx-auto">
+              <label class="label-frames h5 " for="login">Create</label>
+            </div>
+            <div class="form-group col-md-10 mx-auto">
+              <label class="label-frames labelCss" for="uname">USERNAME</label>
+              <input type="text" #LoginId class="form-control" [(ngModel)]="user.userName" name="userName" id="userName"
+               required #userName="ngModel" maxlength="20">
+            </div>
+            <div class="form-group col-md-10 mx-auto">
+              <label class="label-frames labelCss">PASSWORD</label>
+              <input type="password" class="form-control" name="password" [(ngModel)]="user.password"
+               required autocomplete="new-password" maxlength="10">
+            </div>
+            <div class="form-group col-md-10 mx-auto">
+              <button type="submit"  class="btn col-md-12 btnLogin text-white" (click)="loginValidation()">Create</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

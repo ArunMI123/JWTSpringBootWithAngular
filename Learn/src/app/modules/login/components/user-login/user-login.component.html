@@ -1,0 +1,45 @@
+<div class="login">
+    <div class="rounded float-right mt-3 mr-3">
+      <img class="mr-auto" src="./../../../../../assets/images/KLogo.png" alt="CIBC">
+    </div>
+    <div class="container login-content">
+      <div class="card card-login mx-auto">
+        <div class="card-header">
+          <img class="mr-auto" src="../../../../../assets/images/logo_0.png" alt="CIBC">
+        </div>
+        <div class="card-body">
+          <form #f="ngForm" action="" autocomplete="off">
+            <div class="form-group col-md-10 mx-auto">
+              <label class="label-frames h5 " for="login">LOGIN</label>
+            </div>
+            <div class="form-group col-md-10 mx-auto">
+              <label class="label-frames labelCss" for="uname">LOGIN ID</label>
+              <input type="text" #LoginId class="form-control" [(ngModel)]="user.userName" name="userName" id="userName"
+               required [pattern]="blankSpacePattern" #userName="ngModel" (input)="loginPattern(f)" maxlength="20">
+               <small *ngIf="userNameFlag" style="color: red;">Login Id starts with space not allowed</small>
+            </div>
+            <div class="form-group col-md-10 mx-auto">
+              <label class="label-frames labelCss">PASSWORD</label>
+              <input type="password" class="form-control" name="password" [(ngModel)]="user.password"
+               required autocomplete="new-password" maxlength="10">
+            </div>
+            <div class="form-group col-md-10 mx-auto">
+              <button type="submit"  class="btn col-md-12 btnLogin text-white" (click)="loginValidation()">LOG
+                IN </button>
+              <!-- <a href="#" (click)="showInfo()" class="linkCss"><u>FORGOT YOUR PASSWORD?</u></a> -->
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p-toast position="center" key="c" (onClose)="onReject()" [modal]="true" [baseZIndex]="5000">
+      <ng-template let-message pTemplate="message">
+          <div style="text-align: center">
+              <i class="pi pi-exclamation-triangle" style="font-size: 3em"></i>
+              <h3>{{message.summary}}</h3>
+              <p>{{message.detail}}</p>
+          </div>
+      </ng-template>
+  </p-toast>
+  <p-toast [style]="{marginTop: '125px'}" [autoZIndex] = "false" position="top-right"></p-toast>

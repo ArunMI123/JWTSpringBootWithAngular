@@ -1,0 +1,5 @@
+{
+    "production": true,
+    "baseappurl": "http://172.24.30.77:8002/"
+  }
+  

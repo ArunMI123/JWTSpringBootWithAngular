@@ -1,0 +1,74 @@
+.login-content {
+    padding-top: 13% !important;  
+}
+// .login {
+//     background-image: url('../../../assets/images/loginBG.jpg');
+//     background-size: cover;   
+//     background-repeat: no-repeat;
+//      background-position: center center; /* optional, center the image */
+//     height: -webkit-fill-available !important;
+//     -webkit-background-size: cover;
+//     -moz-background-size: cover;
+//      -o-background-size: cover;
+//      background-size: 100% 100%; /* <------ */  
+// }
+
+.login {
+    background: url('../../../../../assets/images/loginBG.jpg') ;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    min-height: 100%;
+    background-size: cover;
+    overflow: auto;
+}
+.card-login {
+    max-width:27em;
+}
+.card-header {    
+    border-bottom: solid 2px rgb(122,184,0);
+    background-color: rgb(255, 255, 255) !important; 
+}
+.btnLogin {
+    background-color: rgb(67,152,95);
+    font-weight: 600!important;    
+}
+.labelCss {
+    font-weight: 600;
+    color: #939393;
+    display: initial !important; 
+}
+input:focus{
+    outline: 0 0 0 0  !important;
+    box-shadow: 0 0 0 0 !important;
+}
+.form-control {
+    height: 2.3rem !important;
+}
+.linkCss {
+    color:rgb(130,143,139);
+    font-weight: 600;
+    text-align: center !important;
+    font-size: 14px !important;
+}
+.h5 {
+    color:rgb(57,74,88);
+}
+:host ::ng-deep button {
+    margin-right: .25em;
+}
+
+:host ::ng-deep .custom-toast .ui-toast-message {
+    color: #ffffff;
+    background: #FC466B;
+    background: -webkit-linear-gradient(to right, #3F5EFB, #FC466B);
+    background: linear-gradient(to right, #3F5EFB, #FC466B);
+}
+
+:host ::ng-deep .custom-toast .ui-toast-close-icon {
+    color: #ffffff;
+}
