@@ -1,6 +1,11 @@
 package com.demo.springsecurityjwt.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,6 +23,7 @@ import com.demo.springsecurityjwt.Util.JwtUtil;
 import com.demo.springsecurityjwt.service.LdapAuthendicationService;
 import com.demo.springsecurityjwt.service.MyUserDetailsService;
 import com.demo.springsecurityjwt.service.UserService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 @RestController
@@ -71,19 +77,46 @@ public class HelloResource {
 	}
 	
 	
-	@RequestMapping(value = "/db/login", method = RequestMethod.POST)
-	public ResponseEntity<?> LoginWithDB(@RequestBody UserInfo user)
-			throws Exception {
+//	@RequestMapping(value = "/db/login", method = RequestMethod.POST)
+//	public ResponseEntity<?> LoginWithDB(@RequestBody UserInfo user)
+//			throws Exception {
+//		try {
+////			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+////					user.getUserName(), user.getPassword()));
+//		} catch (Exception e) {
+//			throw new Exception("Incorrect username or password", e);
+//		}
+//
+//		final UserInfo userDetails = userService.findUserName(user.getUserName());
+//		final String jwt = jwtUtil.generateToken(userDetails);
+//		return ResponseEntity.ok(new AuthenticationResponse(jwt));
+//	}
+	
+	@RequestMapping(value = "/db/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> userLogin(@RequestBody UserInfo user) {
 		try {
-//			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-//					user.getUserName(), user.getPassword()));
+			ObjectMapper objMap = new ObjectMapper();
+			UserInfo userObject = userService.findUserName(user.getUserName());
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+			if (userObject != null) {
+				if (userObject.getUserName().equals(user.getUserName())
+						&& userObject.getPassword().equals(user.getPassword())) {
+					resultMap.put("status", "Success");
+					resultMap.put("user", userObject);
+					final String jwt = jwtUtil.generateToken(userObject);
+					resultMap.put("jwt", new AuthenticationResponse(jwt));
+				} else {
+					resultMap.put("status", "Error");
+					resultMap.put("statusText", "Given Password is wrong");
+				}
+			} else {
+				resultMap.put("status", "Error");
+				resultMap.put("statusText", "Given UserId is wrong");
+			}
+			return new ResponseEntity<String>(objMap.writeValueAsString(resultMap), HttpStatus.OK);
 		} catch (Exception e) {
-			throw new Exception("Incorrect username or password", e);
+			return new ResponseEntity<String>(e.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
-		final UserInfo userDetails = userService.findUserName(user.getUserName());
-		final String jwt = jwtUtil.generateToken(userDetails);
-		return ResponseEntity.ok(new AuthenticationResponse(jwt));
 	}
 
 }

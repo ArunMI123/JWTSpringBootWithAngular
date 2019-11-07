@@ -3,6 +3,7 @@ import { CommonService } from '../../../../services/common.service';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { UserModel } from 'src/app/Model/user.model';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-user-login',
@@ -15,21 +16,22 @@ export class UserLoginComponent implements OnInit {
   public userNameFlag: boolean = false;
   //@ViewChild('LoginId') private elementRef: ElementRef;
   constructor(private commonService: CommonService, private messageService: MessageService,
-    private router: Router, private user: UserModel) {
+    private router: Router, private user: UserModel, private auth: AuthService) {
   }
   ngOnInit() {
+    this.user.userName = 'kumar';
+    this.user.password = '123'
     // this.elementRef.nativeElement.focus();
-    localStorage.removeItem('Authorization');
   }
   loginValidation() {
     const requestURL = 'db/login';
     this.commonService.postData(requestURL, this.user).subscribe((res: any) => {
-      // if (res.status.toString() === 'Error') {
-      //   this.showConfirm(res.statusText);
-      // }
-      console.log('res', res);
-      localStorage.setItem('Authorization', res.jwt);
-      this.router.navigate(['project/employee']);
+      if (res.status.toString() === 'Error') {
+        this.showConfirm(res.statusText);
+      } else {
+        this.auth.sendToken(res.jwt.jwt);
+        this.router.navigate(['project/employee']);
+      }
     });
   }
 

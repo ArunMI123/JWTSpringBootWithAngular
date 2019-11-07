@@ -3,6 +3,7 @@ import { CommonService } from '../../../../../services/common.service';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { UserModel } from 'src/app/Model/user.model';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-create',
@@ -12,7 +13,7 @@ import { UserModel } from 'src/app/Model/user.model';
 export class CreateComponent implements OnInit {
 
   constructor(private commonService: CommonService, private messageService: MessageService,
-              private router: Router, private user: UserModel) {
+              private router: Router, private user: UserModel, private auth: AuthService) {
   }
 
   ngOnInit() {
@@ -22,6 +23,11 @@ export class CreateComponent implements OnInit {
     const requestURL = 'saveUser';
     this.commonService.postData(requestURL, this.user).subscribe((res: any) => {
     });
+  }
+
+  logout(){
+    this.auth.logout();
+    this.router.navigate(['login']);
   }
 
 }
